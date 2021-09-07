@@ -130,7 +130,6 @@ int main (void) {
 	songs song_choosed;
 	songs songsOptions[] = {melodyMario, melodyGodFather, melodyTetris};
 	song_choosed = songsOptions[selected];	
-	int wholenote = (60000 * 4)/song_choosed.tempo;
 	int i = 0;
 	while(1) {
 		if (started) {
@@ -148,6 +147,7 @@ int main (void) {
 				gfx_mono_draw_string(song_choosed.name, 0, 3, &sysfont);
 			}
 			
+			int wholenote = (60000 * 4)/song_choosed.tempo;
 			note nota_atual = song_choosed.notes[i];
 			int freq = nota_atual.freq;
 			int divider = nota_atual.duration;

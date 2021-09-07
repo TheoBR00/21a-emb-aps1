@@ -19,23 +19,23 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY
   7 .comment      00000059  00000000  00000000  000215e2  2**0
                   CONTENTS, READONLY
-  8 .debug_info   00015945  00000000  00000000  0002163b  2**0
+  8 .debug_info   0001592c  00000000  00000000  0002163b  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_abbrev 000030a7  00000000  00000000  00036f80  2**0
+  9 .debug_abbrev 0000309a  00000000  00000000  00036f67  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_loc    0000512d  00000000  00000000  0003a027  2**0
+ 10 .debug_loc    0000512b  00000000  00000000  0003a001  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_aranges 000007c8  00000000  00000000  0003f154  2**0
+ 11 .debug_aranges 000007c8  00000000  00000000  0003f12c  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_ranges 00000830  00000000  00000000  0003f91c  2**0
+ 12 .debug_ranges 00000830  00000000  00000000  0003f8f4  2**0
                   CONTENTS, READONLY, DEBUGGING
- 13 .debug_macro  000208a6  00000000  00000000  0004014c  2**0
+ 13 .debug_macro  000208a6  00000000  00000000  00040124  2**0
                   CONTENTS, READONLY, DEBUGGING
- 14 .debug_line   0000d505  00000000  00000000  000609f2  2**0
+ 14 .debug_line   0000d503  00000000  00000000  000609ca  2**0
                   CONTENTS, READONLY, DEBUGGING
- 15 .debug_str    0008fcd6  00000000  00000000  0006def7  2**0
+ 15 .debug_str    0008fcd6  00000000  00000000  0006decd  2**0
                   CONTENTS, READONLY, DEBUGGING
- 16 .debug_frame  000015a8  00000000  00000000  000fdbd0  2**2
+ 16 .debug_frame  000015a8  00000000  00000000  000fdba4  2**2
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -3203,204 +3203,200 @@ void init(void) {
 
 int main (void) {
   401354:	e92d 4ff0 	stmdb	sp!, {r4, r5, r6, r7, r8, r9, sl, fp, lr}
-  401358:	b099      	sub	sp, #100	; 0x64
+  401358:	b097      	sub	sp, #92	; 0x5c
 	init();
   40135a:	4b51      	ldr	r3, [pc, #324]	; (4014a0 <main+0x14c>)
   40135c:	4798      	blx	r3
 	gfx_mono_ssd1306_init();
   40135e:	4b51      	ldr	r3, [pc, #324]	; (4014a4 <main+0x150>)
   401360:	4798      	blx	r3
-	char buffer[100];
 	
 	songs song_choosed;
 	songs songsOptions[] = {melodyMario, melodyGodFather, melodyTetris};
   401362:	f640 221c 	movw	r2, #2588	; 0xa1c
   401366:	4950      	ldr	r1, [pc, #320]	; (4014a8 <main+0x154>)
-  401368:	a804      	add	r0, sp, #16
+  401368:	a802      	add	r0, sp, #8
   40136a:	4c50      	ldr	r4, [pc, #320]	; (4014ac <main+0x158>)
   40136c:	47a0      	blx	r4
   40136e:	f240 421c 	movw	r2, #1052	; 0x41c
   401372:	494f      	ldr	r1, [pc, #316]	; (4014b0 <main+0x15c>)
-  401374:	a809      	add	r0, sp, #36	; 0x24
+  401374:	a807      	add	r0, sp, #28
   401376:	47a0      	blx	r4
   401378:	f44f 724b 	mov.w	r2, #812	; 0x32c
   40137c:	494d      	ldr	r1, [pc, #308]	; (4014b4 <main+0x160>)
-  40137e:	a80e      	add	r0, sp, #56	; 0x38
+  40137e:	a80c      	add	r0, sp, #48	; 0x30
   401380:	47a0      	blx	r4
 	song_choosed = songsOptions[selected];	
   401382:	4b4d      	ldr	r3, [pc, #308]	; (4014b8 <main+0x164>)
   401384:	681b      	ldr	r3, [r3, #0]
   401386:	eb03 0383 	add.w	r3, r3, r3, lsl #2
-  40138a:	aa18      	add	r2, sp, #96	; 0x60
+  40138a:	aa16      	add	r2, sp, #88	; 0x58
   40138c:	eb02 0483 	add.w	r4, r2, r3, lsl #2
-  401390:	ad13      	add	r5, sp, #76	; 0x4c
+  401390:	ad11      	add	r5, sp, #68	; 0x44
   401392:	3c50      	subs	r4, #80	; 0x50
   401394:	cc0f      	ldmia	r4!, {r0, r1, r2, r3}
   401396:	c50f      	stmia	r5!, {r0, r1, r2, r3}
   401398:	6823      	ldr	r3, [r4, #0]
   40139a:	602b      	str	r3, [r5, #0]
-	int wholenote = (60000 * 4)/song_choosed.tempo;
-  40139c:	4a47      	ldr	r2, [pc, #284]	; (4014bc <main+0x168>)
-  40139e:	fb92 f8f3 	sdiv	r8, r2, r3
 	int i = 0;
-  4013a2:	2500      	movs	r5, #0
+  40139c:	2600      	movs	r6, #0
 	while(1) {
 		if (started) {
-  4013a4:	4c46      	ldr	r4, [pc, #280]	; (4014c0 <main+0x16c>)
+  40139e:	4c47      	ldr	r4, [pc, #284]	; (4014bc <main+0x168>)
 			if(selected == 0){
-  4013a6:	4f44      	ldr	r7, [pc, #272]	; (4014b8 <main+0x164>)
+  4013a0:	4f45      	ldr	r7, [pc, #276]	; (4014b8 <main+0x164>)
 				song_choosed = melodyMario;
 				gfx_mono_draw_string("             ", 0, 3, &sysfont);
-  4013a8:	f8df 914c 	ldr.w	r9, [pc, #332]	; 4014f8 <main+0x1a4>
-  4013ac:	e04d      	b.n	40144a <main+0xf6>
+  4013a2:	f8df 9150 	ldr.w	r9, [pc, #336]	; 4014f4 <main+0x1a0>
+  4013a6:	e04c      	b.n	401442 <main+0xee>
 				song_choosed = melodyMario;
-  4013ae:	f640 221c 	movw	r2, #2588	; 0xa1c
-  4013b2:	493d      	ldr	r1, [pc, #244]	; (4014a8 <main+0x154>)
-  4013b4:	a813      	add	r0, sp, #76	; 0x4c
-  4013b6:	4b3d      	ldr	r3, [pc, #244]	; (4014ac <main+0x158>)
-  4013b8:	4798      	blx	r3
+  4013a8:	f640 221c 	movw	r2, #2588	; 0xa1c
+  4013ac:	493e      	ldr	r1, [pc, #248]	; (4014a8 <main+0x154>)
+  4013ae:	a811      	add	r0, sp, #68	; 0x44
+  4013b0:	4b3e      	ldr	r3, [pc, #248]	; (4014ac <main+0x158>)
+  4013b2:	4798      	blx	r3
 				gfx_mono_draw_string("             ", 0, 3, &sysfont);
-  4013ba:	4b42      	ldr	r3, [pc, #264]	; (4014c4 <main+0x170>)
-  4013bc:	2203      	movs	r2, #3
-  4013be:	2100      	movs	r1, #0
-  4013c0:	4841      	ldr	r0, [pc, #260]	; (4014c8 <main+0x174>)
-  4013c2:	47c8      	blx	r9
+  4013b4:	4b42      	ldr	r3, [pc, #264]	; (4014c0 <main+0x16c>)
+  4013b6:	2203      	movs	r2, #3
+  4013b8:	2100      	movs	r1, #0
+  4013ba:	4842      	ldr	r0, [pc, #264]	; (4014c4 <main+0x170>)
+  4013bc:	47c8      	blx	r9
 				gfx_mono_draw_string(song_choosed.name, 0, 3, &sysfont);
-  4013c4:	4b3f      	ldr	r3, [pc, #252]	; (4014c4 <main+0x170>)
-  4013c6:	2203      	movs	r2, #3
-  4013c8:	2100      	movs	r1, #0
-  4013ca:	a813      	add	r0, sp, #76	; 0x4c
-  4013cc:	47c8      	blx	r9
-  4013ce:	e042      	b.n	401456 <main+0x102>
+  4013be:	4b40      	ldr	r3, [pc, #256]	; (4014c0 <main+0x16c>)
+  4013c0:	2203      	movs	r2, #3
+  4013c2:	2100      	movs	r1, #0
+  4013c4:	a811      	add	r0, sp, #68	; 0x44
+  4013c6:	47c8      	blx	r9
+  4013c8:	e041      	b.n	40144e <main+0xfa>
 			} 
 			if(selected == 1) {
 				song_choosed = melodyGodFather;
-  4013d0:	f240 421c 	movw	r2, #1052	; 0x41c
-  4013d4:	4936      	ldr	r1, [pc, #216]	; (4014b0 <main+0x15c>)
-  4013d6:	a813      	add	r0, sp, #76	; 0x4c
-  4013d8:	4b34      	ldr	r3, [pc, #208]	; (4014ac <main+0x158>)
-  4013da:	4798      	blx	r3
+  4013ca:	f240 421c 	movw	r2, #1052	; 0x41c
+  4013ce:	4938      	ldr	r1, [pc, #224]	; (4014b0 <main+0x15c>)
+  4013d0:	a811      	add	r0, sp, #68	; 0x44
+  4013d2:	4b36      	ldr	r3, [pc, #216]	; (4014ac <main+0x158>)
+  4013d4:	4798      	blx	r3
 				gfx_mono_draw_string(song_choosed.name, 0, 3, &sysfont);
-  4013dc:	4b39      	ldr	r3, [pc, #228]	; (4014c4 <main+0x170>)
-  4013de:	2203      	movs	r2, #3
-  4013e0:	2100      	movs	r1, #0
-  4013e2:	a813      	add	r0, sp, #76	; 0x4c
-  4013e4:	47c8      	blx	r9
-  4013e6:	e039      	b.n	40145c <main+0x108>
+  4013d6:	4b3a      	ldr	r3, [pc, #232]	; (4014c0 <main+0x16c>)
+  4013d8:	2203      	movs	r2, #3
+  4013da:	2100      	movs	r1, #0
+  4013dc:	a811      	add	r0, sp, #68	; 0x44
+  4013de:	47c8      	blx	r9
+  4013e0:	e038      	b.n	401454 <main+0x100>
 			} if(selected == 2) {
 				song_choosed = melodyTetris;
-  4013e8:	f44f 724b 	mov.w	r2, #812	; 0x32c
-  4013ec:	4931      	ldr	r1, [pc, #196]	; (4014b4 <main+0x160>)
-  4013ee:	a813      	add	r0, sp, #76	; 0x4c
-  4013f0:	4b2e      	ldr	r3, [pc, #184]	; (4014ac <main+0x158>)
-  4013f2:	4798      	blx	r3
+  4013e2:	f44f 724b 	mov.w	r2, #812	; 0x32c
+  4013e6:	4933      	ldr	r1, [pc, #204]	; (4014b4 <main+0x160>)
+  4013e8:	a811      	add	r0, sp, #68	; 0x44
+  4013ea:	4b30      	ldr	r3, [pc, #192]	; (4014ac <main+0x158>)
+  4013ec:	4798      	blx	r3
 				gfx_mono_draw_string("                ", 0, 3, &sysfont);
-  4013f4:	4b33      	ldr	r3, [pc, #204]	; (4014c4 <main+0x170>)
-  4013f6:	2203      	movs	r2, #3
-  4013f8:	2100      	movs	r1, #0
-  4013fa:	4834      	ldr	r0, [pc, #208]	; (4014cc <main+0x178>)
-  4013fc:	47c8      	blx	r9
+  4013ee:	4b34      	ldr	r3, [pc, #208]	; (4014c0 <main+0x16c>)
+  4013f0:	2203      	movs	r2, #3
+  4013f2:	2100      	movs	r1, #0
+  4013f4:	4834      	ldr	r0, [pc, #208]	; (4014c8 <main+0x174>)
+  4013f6:	47c8      	blx	r9
 				gfx_mono_draw_string(song_choosed.name, 0, 3, &sysfont);
-  4013fe:	4b31      	ldr	r3, [pc, #196]	; (4014c4 <main+0x170>)
-  401400:	2203      	movs	r2, #3
-  401402:	2100      	movs	r1, #0
-  401404:	a813      	add	r0, sp, #76	; 0x4c
-  401406:	47c8      	blx	r9
-  401408:	e02b      	b.n	401462 <main+0x10e>
-			}
+  4013f8:	4b31      	ldr	r3, [pc, #196]	; (4014c0 <main+0x16c>)
+  4013fa:	2203      	movs	r2, #3
+  4013fc:	2100      	movs	r1, #0
+  4013fe:	a811      	add	r0, sp, #68	; 0x44
+  401400:	47c8      	blx	r9
+  401402:	e02a      	b.n	40145a <main+0x106>
 			
+			int wholenote = (60000 * 4)/song_choosed.tempo;
 			note nota_atual = song_choosed.notes[i];
 			int freq = nota_atual.freq;
 			int divider = nota_atual.duration;
 			int noteDuration = divider > 0 ? wholenote/divider : 1.5*wholenote/abs(divider);
-  40140a:	f8df b0f0 	ldr.w	fp, [pc, #240]	; 4014fc <main+0x1a8>
-  40140e:	4640      	mov	r0, r8
-  401410:	47d8      	blx	fp
-  401412:	2200      	movs	r2, #0
-  401414:	4b2e      	ldr	r3, [pc, #184]	; (4014d0 <main+0x17c>)
-  401416:	4e2f      	ldr	r6, [pc, #188]	; (4014d4 <main+0x180>)
-  401418:	47b0      	blx	r6
-  40141a:	e9cd 0102 	strd	r0, r1, [sp, #8]
-  40141e:	9b01      	ldr	r3, [sp, #4]
-  401420:	2b00      	cmp	r3, #0
-  401422:	bfb8      	it	lt
-  401424:	425b      	neglt	r3, r3
-  401426:	4618      	mov	r0, r3
-  401428:	47d8      	blx	fp
-  40142a:	4602      	mov	r2, r0
-  40142c:	460b      	mov	r3, r1
-  40142e:	e9dd 0102 	ldrd	r0, r1, [sp, #8]
-  401432:	4e29      	ldr	r6, [pc, #164]	; (4014d8 <main+0x184>)
-  401434:	47b0      	blx	r6
-  401436:	4b29      	ldr	r3, [pc, #164]	; (4014dc <main+0x188>)
-  401438:	4798      	blx	r3
-  40143a:	4601      	mov	r1, r0
-  40143c:	e01d      	b.n	40147a <main+0x126>
+  401404:	f8df a0f0 	ldr.w	sl, [pc, #240]	; 4014f8 <main+0x1a4>
+  401408:	47d0      	blx	sl
+  40140a:	2200      	movs	r2, #0
+  40140c:	4b2f      	ldr	r3, [pc, #188]	; (4014cc <main+0x178>)
+  40140e:	f8df b0ec 	ldr.w	fp, [pc, #236]	; 4014fc <main+0x1a8>
+  401412:	47d8      	blx	fp
+  401414:	e9cd 0100 	strd	r0, r1, [sp]
+  401418:	ea85 70e5 	eor.w	r0, r5, r5, asr #31
+  40141c:	eba0 70e5 	sub.w	r0, r0, r5, asr #31
+  401420:	47d0      	blx	sl
+  401422:	4602      	mov	r2, r0
+  401424:	460b      	mov	r3, r1
+  401426:	e9dd 0100 	ldrd	r0, r1, [sp]
+  40142a:	4d29      	ldr	r5, [pc, #164]	; (4014d0 <main+0x17c>)
+  40142c:	47a8      	blx	r5
+  40142e:	4b29      	ldr	r3, [pc, #164]	; (4014d4 <main+0x180>)
+  401430:	4798      	blx	r3
+  401432:	4601      	mov	r1, r0
+  401434:	e020      	b.n	401478 <main+0x124>
+			if (change_music) {
 				gfx_mono_draw_string("           ", 0, 15, &sysfont);
 				i = 0;
 				change_music = 0;
 			}
-			//sprintf(buffer, "%d", "\t"*i);
 			gfx_mono_draw_string("\t", i, 15, &sysfont);
-  40143e:	4b21      	ldr	r3, [pc, #132]	; (4014c4 <main+0x170>)
-  401440:	220f      	movs	r2, #15
-  401442:	b2e9      	uxtb	r1, r5
-  401444:	4826      	ldr	r0, [pc, #152]	; (4014e0 <main+0x18c>)
-  401446:	47c8      	blx	r9
+  401436:	4b22      	ldr	r3, [pc, #136]	; (4014c0 <main+0x16c>)
+  401438:	220f      	movs	r2, #15
+  40143a:	b2f1      	uxtb	r1, r6
+  40143c:	4826      	ldr	r0, [pc, #152]	; (4014d8 <main+0x184>)
+  40143e:	47c8      	blx	r9
 			i++;
-  401448:	3501      	adds	r5, #1
+  401440:	3601      	adds	r6, #1
 		if (started) {
-  40144a:	7823      	ldrb	r3, [r4, #0]
-  40144c:	2b00      	cmp	r3, #0
-  40144e:	d0fc      	beq.n	40144a <main+0xf6>
+  401442:	7823      	ldrb	r3, [r4, #0]
+  401444:	2b00      	cmp	r3, #0
+  401446:	d0fc      	beq.n	401442 <main+0xee>
 			if(selected == 0){
-  401450:	683b      	ldr	r3, [r7, #0]
-  401452:	2b00      	cmp	r3, #0
-  401454:	d0ab      	beq.n	4013ae <main+0x5a>
+  401448:	683b      	ldr	r3, [r7, #0]
+  40144a:	2b00      	cmp	r3, #0
+  40144c:	d0ac      	beq.n	4013a8 <main+0x54>
 			if(selected == 1) {
-  401456:	683b      	ldr	r3, [r7, #0]
-  401458:	2b01      	cmp	r3, #1
-  40145a:	d0b9      	beq.n	4013d0 <main+0x7c>
+  40144e:	683b      	ldr	r3, [r7, #0]
+  401450:	2b01      	cmp	r3, #1
+  401452:	d0ba      	beq.n	4013ca <main+0x76>
 			} if(selected == 2) {
-  40145c:	683b      	ldr	r3, [r7, #0]
-  40145e:	2b02      	cmp	r3, #2
-  401460:	d0c2      	beq.n	4013e8 <main+0x94>
+  401454:	683b      	ldr	r3, [r7, #0]
+  401456:	2b02      	cmp	r3, #2
+  401458:	d0c3      	beq.n	4013e2 <main+0x8e>
+			int wholenote = (60000 * 4)/song_choosed.tempo;
+  40145a:	9915      	ldr	r1, [sp, #84]	; 0x54
+  40145c:	481f      	ldr	r0, [pc, #124]	; (4014dc <main+0x188>)
+  40145e:	fb90 f0f1 	sdiv	r0, r0, r1
 			note nota_atual = song_choosed.notes[i];
-  401462:	aa13      	add	r2, sp, #76	; 0x4c
-  401464:	00eb      	lsls	r3, r5, #3
+  401462:	aa11      	add	r2, sp, #68	; 0x44
+  401464:	00f3      	lsls	r3, r6, #3
   401466:	3314      	adds	r3, #20
   401468:	18d1      	adds	r1, r2, r3
-  40146a:	f852 a003 	ldr.w	sl, [r2, r3]
-  40146e:	684b      	ldr	r3, [r1, #4]
-  401470:	9301      	str	r3, [sp, #4]
+  40146a:	f852 8003 	ldr.w	r8, [r2, r3]
+  40146e:	684d      	ldr	r5, [r1, #4]
 			int noteDuration = divider > 0 ? wholenote/divider : 1.5*wholenote/abs(divider);
-  401472:	2b00      	cmp	r3, #0
-  401474:	ddc9      	ble.n	40140a <main+0xb6>
-  401476:	fb98 f1f3 	sdiv	r1, r8, r3
+  401470:	2d00      	cmp	r5, #0
+  401472:	ddc7      	ble.n	401404 <main+0xb0>
+  401474:	fb90 f1f5 	sdiv	r1, r0, r5
 			tone(freq, noteDuration);
-  40147a:	4650      	mov	r0, sl
-  40147c:	4b19      	ldr	r3, [pc, #100]	; (4014e4 <main+0x190>)
-  40147e:	4798      	blx	r3
+  401478:	4640      	mov	r0, r8
+  40147a:	4b19      	ldr	r3, [pc, #100]	; (4014e0 <main+0x18c>)
+  40147c:	4798      	blx	r3
 			delay_ms(10);
-  401480:	4819      	ldr	r0, [pc, #100]	; (4014e8 <main+0x194>)
-  401482:	4b1a      	ldr	r3, [pc, #104]	; (4014ec <main+0x198>)
-  401484:	4798      	blx	r3
+  40147e:	4819      	ldr	r0, [pc, #100]	; (4014e4 <main+0x190>)
+  401480:	4b19      	ldr	r3, [pc, #100]	; (4014e8 <main+0x194>)
+  401482:	4798      	blx	r3
 			if (change_music) {
-  401486:	4b1a      	ldr	r3, [pc, #104]	; (4014f0 <main+0x19c>)
-  401488:	781b      	ldrb	r3, [r3, #0]
-  40148a:	2b00      	cmp	r3, #0
-  40148c:	d0d7      	beq.n	40143e <main+0xea>
+  401484:	4b19      	ldr	r3, [pc, #100]	; (4014ec <main+0x198>)
+  401486:	781b      	ldrb	r3, [r3, #0]
+  401488:	2b00      	cmp	r3, #0
+  40148a:	d0d4      	beq.n	401436 <main+0xe2>
 				gfx_mono_draw_string("           ", 0, 15, &sysfont);
-  40148e:	4b0d      	ldr	r3, [pc, #52]	; (4014c4 <main+0x170>)
-  401490:	220f      	movs	r2, #15
-  401492:	2100      	movs	r1, #0
-  401494:	4817      	ldr	r0, [pc, #92]	; (4014f4 <main+0x1a0>)
-  401496:	47c8      	blx	r9
+  40148c:	4b0c      	ldr	r3, [pc, #48]	; (4014c0 <main+0x16c>)
+  40148e:	220f      	movs	r2, #15
+  401490:	2100      	movs	r1, #0
+  401492:	4817      	ldr	r0, [pc, #92]	; (4014f0 <main+0x19c>)
+  401494:	47c8      	blx	r9
 				change_music = 0;
-  401498:	2500      	movs	r5, #0
-  40149a:	4b15      	ldr	r3, [pc, #84]	; (4014f0 <main+0x19c>)
-  40149c:	701d      	strb	r5, [r3, #0]
-  40149e:	e7ce      	b.n	40143e <main+0xea>
+  401496:	2600      	movs	r6, #0
+  401498:	4b14      	ldr	r3, [pc, #80]	; (4014ec <main+0x198>)
+  40149a:	701e      	strb	r6, [r3, #0]
+  40149c:	e7cb      	b.n	401436 <main+0xe2>
+  40149e:	bf00      	nop
   4014a0:	00401249 	.word	0x00401249
   4014a4:	00400571 	.word	0x00400571
   4014a8:	2040043c 	.word	0x2040043c
@@ -3408,23 +3404,23 @@ int main (void) {
   4014b0:	20400020 	.word	0x20400020
   4014b4:	20400e58 	.word	0x20400e58
   4014b8:	2040184c 	.word	0x2040184c
-  4014bc:	0003a980 	.word	0x0003a980
-  4014c0:	20401850 	.word	0x20401850
-  4014c4:	2040000c 	.word	0x2040000c
-  4014c8:	00402e78 	.word	0x00402e78
-  4014cc:	00402e88 	.word	0x00402e88
-  4014d0:	3ff80000 	.word	0x3ff80000
-  4014d4:	00401871 	.word	0x00401871
-  4014d8:	00401ac5 	.word	0x00401ac5
-  4014dc:	00401da5 	.word	0x00401da5
-  4014e0:	00402ea8 	.word	0x00402ea8
-  4014e4:	00401209 	.word	0x00401209
-  4014e8:	0007b784 	.word	0x0007b784
-  4014ec:	20400001 	.word	0x20400001
-  4014f0:	20401848 	.word	0x20401848
-  4014f4:	00402e9c 	.word	0x00402e9c
-  4014f8:	004004d9 	.word	0x004004d9
-  4014fc:	004017a5 	.word	0x004017a5
+  4014bc:	20401850 	.word	0x20401850
+  4014c0:	2040000c 	.word	0x2040000c
+  4014c4:	00402e78 	.word	0x00402e78
+  4014c8:	00402e88 	.word	0x00402e88
+  4014cc:	3ff80000 	.word	0x3ff80000
+  4014d0:	00401ac5 	.word	0x00401ac5
+  4014d4:	00401da5 	.word	0x00401da5
+  4014d8:	00402ea8 	.word	0x00402ea8
+  4014dc:	0003a980 	.word	0x0003a980
+  4014e0:	00401209 	.word	0x00401209
+  4014e4:	0007b784 	.word	0x0007b784
+  4014e8:	20400001 	.word	0x20400001
+  4014ec:	20401848 	.word	0x20401848
+  4014f0:	00402e9c 	.word	0x00402e9c
+  4014f4:	004004d9 	.word	0x004004d9
+  4014f8:	004017a5 	.word	0x004017a5
+  4014fc:	00401871 	.word	0x00401871
 
 00401500 <__aeabi_drsub>:
   401500:	f081 4100 	eor.w	r1, r1, #2147483648	; 0x80000000

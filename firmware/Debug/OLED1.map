@@ -7002,7 +7002,7 @@ OUTPUT(OLED1.elf elf32-littlearm)
  .comment       0x00000059       0x5a src/ASF/sam/utils/cmsis/same70/source/templates/system_same70.o
  .comment       0x00000059       0x5a src/main.o
 
-.debug_info     0x00000000    0x15945
+.debug_info     0x00000000    0x1592c
  .debug_info    0x00000000     0x115d src/ASF/sam/drivers/spi/spi.o
  .debug_info    0x0000115d      0xdd2 src/oled/gfx_mono_framebuffer.o
  .debug_info    0x00001f2f     0x157d src/oled/gfx_mono_generic.o
@@ -7019,9 +7019,9 @@ OUTPUT(OLED1.elf elf32-littlearm)
  .debug_info    0x00010060     0x1e0e src/ASF/sam/drivers/pmc/pmc.o
  .debug_info    0x00011e6e     0x156a src/ASF/sam/utils/cmsis/same70/source/templates/gcc/startup_same70.o
  .debug_info    0x000133d8      0x55b src/ASF/sam/utils/cmsis/same70/source/templates/system_same70.o
- .debug_info    0x00013933     0x2012 src/main.o
+ .debug_info    0x00013933     0x1ff9 src/main.o
 
-.debug_abbrev   0x00000000     0x30a7
+.debug_abbrev   0x00000000     0x309a
  .debug_abbrev  0x00000000      0x3a5 src/ASF/sam/drivers/spi/spi.o
  .debug_abbrev  0x000003a5      0x284 src/oled/gfx_mono_framebuffer.o
  .debug_abbrev  0x00000629      0x2a2 src/oled/gfx_mono_generic.o
@@ -7038,9 +7038,9 @@ OUTPUT(OLED1.elf elf32-littlearm)
  .debug_abbrev  0x000025bf      0x369 src/ASF/sam/drivers/pmc/pmc.o
  .debug_abbrev  0x00002928      0x2e4 src/ASF/sam/utils/cmsis/same70/source/templates/gcc/startup_same70.o
  .debug_abbrev  0x00002c0c      0x102 src/ASF/sam/utils/cmsis/same70/source/templates/system_same70.o
- .debug_abbrev  0x00002d0e      0x399 src/main.o
+ .debug_abbrev  0x00002d0e      0x38c src/main.o
 
-.debug_loc      0x00000000     0x512d
+.debug_loc      0x00000000     0x512b
  .debug_loc     0x00000000      0x610 src/ASF/sam/drivers/spi/spi.o
  .debug_loc     0x00000610      0x506 src/oled/gfx_mono_framebuffer.o
  .debug_loc     0x00000b16      0xda8 src/oled/gfx_mono_generic.o
@@ -7053,7 +7053,7 @@ OUTPUT(OLED1.elf elf32-littlearm)
  .debug_loc     0x00003b89      0x588 src/ASF/sam/drivers/pio/pio_handler.o
  .debug_loc     0x00004111      0xce3 src/ASF/sam/drivers/pmc/pmc.o
  .debug_loc     0x00004df4       0x77 src/ASF/sam/utils/cmsis/same70/source/templates/gcc/startup_same70.o
- .debug_loc     0x00004e6b      0x2c2 src/main.o
+ .debug_loc     0x00004e6b      0x2c0 src/main.o
 
 .debug_aranges  0x00000000      0x7c8
  .debug_aranges
@@ -7298,7 +7298,7 @@ OUTPUT(OLED1.elf elf32-littlearm)
  .debug_macro   0x0001fbaa      0x882 src/main.o
  .debug_macro   0x0002042c      0x47a src/main.o
 
-.debug_line     0x00000000     0xd505
+.debug_line     0x00000000     0xd503
  .debug_line    0x00000000      0xc41 src/ASF/sam/drivers/spi/spi.o
  .debug_line    0x00000c41      0xe3f src/oled/gfx_mono_framebuffer.o
  .debug_line    0x00001a80      0xef3 src/oled/gfx_mono_generic.o
@@ -7315,7 +7315,7 @@ OUTPUT(OLED1.elf elf32-littlearm)
  .debug_line    0x0000a3a1     0x106b src/ASF/sam/drivers/pmc/pmc.o
  .debug_line    0x0000b40c      0xa73 src/ASF/sam/utils/cmsis/same70/source/templates/gcc/startup_same70.o
  .debug_line    0x0000be7f      0x7e9 src/ASF/sam/utils/cmsis/same70/source/templates/system_same70.o
- .debug_line    0x0000c668      0xe9d src/main.o
+ .debug_line    0x0000c668      0xe9b src/main.o
 
 .debug_str      0x00000000    0x8fcd6
  .debug_str     0x00000000    0x85ea9 src/ASF/sam/drivers/spi/spi.o
@@ -7351,7 +7351,7 @@ OUTPUT(OLED1.elf elf32-littlearm)
  .debug_str     0x0008f491      0x137 src/ASF/sam/utils/cmsis/same70/source/templates/system_same70.o
                               0x72875 (size before relaxing)
  .debug_str     0x0008f5c8      0x70e src/main.o
-                              0x8d9ec (size before relaxing)
+                              0x8d9e5 (size before relaxing)
 
 .debug_frame    0x00000000     0x15a8
  .debug_frame   0x00000000      0x140 src/ASF/sam/drivers/spi/spi.o
