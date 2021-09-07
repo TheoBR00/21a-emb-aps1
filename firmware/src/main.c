@@ -44,6 +44,7 @@
 volatile char flag1;
 volatile char started;
 volatile char flag3;
+
  
 // calbacks 
 void but1_callback() {
@@ -68,17 +69,18 @@ void pisca_led(int n, int t){
 
 void play_buzzer(int freq) {
 	pio_set(BUZZER_PIO, BUZZER_PIO_IDX_MASK);
-	delay_ms(1000/freq);
+	delay_us((1e6)/freq);
 	pio_clear(BUZZER_PIO, BUZZER_PIO_IDX_MASK);
-	delay_ms(1000/freq);
+	delay_us((1e6)/freq);
 }
+
 
 // freq = 1/T
 // time = s
 // t = time * freq (segundos)
-void tone(int freq, int time) {
-	int tempo_musica = time*freq/1000;
-	for (int i=0; i < tempo_musica; i++) {
+void tone(int freq, int time){
+	int tempo_musica = time*freq/1E3;
+	for (int i = 0; i < tempo_musica; i++){
 		play_buzzer(freq);
 	}
 }
@@ -122,18 +124,19 @@ void init(void) {
 }
 
 int tempo = 80;
+int tempoM = 250;
 int divider = 0, noteDuration = 0;
 
-int notes = sizeof(melody) / sizeof(melody[0]) / 2;
+int notes = sizeof(melodyMario) / sizeof(melodyMario[0]) / 2;
 
 int main (void) {
 	init();
-	int wholenote = (60000 * 4) / tempo;
+	int wholenote = (60000 * 4) / tempoM;
 	while(1) {
 		if (started) {
 			for (int thisNote = 0; thisNote < notes * 2; thisNote = thisNote + 2) {
 				// calculates the duration of each note
-				divider = melody[thisNote + 1];
+				divider = melodyMario[thisNote + 1];
 				if (divider > 0) {
 					// regular note, just proceed
 					noteDuration = (wholenote) / divider;
@@ -142,8 +145,8 @@ int main (void) {
 					noteDuration = (wholenote) / abs(divider);
 					noteDuration *= 1.5; // increases the duration in half for dotted notes
 				}
-				tone(melody[thisNote], noteDuration*0.9);
-				delay_ms(100);
+				tone(melodyMario[thisNote], noteDuration*0.9);
+				delay_ms(noteDuration*0.2);
 			}
 		}
 		pisca_led(1, 200);
