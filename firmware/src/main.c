@@ -45,6 +45,14 @@ volatile int selected = 0;
 volatile char started = 0;
 volatile char change_music = 0;
 
+// prototypes
+void but1_callback();
+void but2_callback();
+void play_buzzer(int freq);
+void tone(int freq, int time);
+void init(void);
+int main (void);
+
 // calbacks 
 void but1_callback() {
 	selected++;
@@ -130,16 +138,16 @@ int main (void) {
 		if (started) {
 			if(selected == 0){
 				song_choosed = melodyMario;
-				gfx_mono_draw_string("             ", 0, 5, &sysfont);
-				gfx_mono_draw_string(song_choosed.name, 0, 5, &sysfont);
+				gfx_mono_draw_string("             ", 0, 3, &sysfont);
+				gfx_mono_draw_string(song_choosed.name, 0, 3, &sysfont);
 			} 
 			if(selected == 1) {
 				song_choosed = melodyGodFather;
-				gfx_mono_draw_string(song_choosed.name, 0, 5, &sysfont);
+				gfx_mono_draw_string(song_choosed.name, 0, 3, &sysfont);
 			} if(selected == 2) {
 				song_choosed = melodyTetris;
-				gfx_mono_draw_string("                ", 0, 5, &sysfont);
-				gfx_mono_draw_string(song_choosed.name, 0, 5, &sysfont);
+				gfx_mono_draw_string("                ", 0, 3, &sysfont);
+				gfx_mono_draw_string(song_choosed.name, 0, 3, &sysfont);
 			}
 			
 			note nota_atual = song_choosed.notes[i];
@@ -148,11 +156,11 @@ int main (void) {
 			int noteDuration = divider > 0 ? wholenote/divider : 1.5*wholenote/abs(divider);
 			tone(freq, noteDuration);
 			delay_ms(10);
-			
 			if (change_music) {
 				i = 0;
 				change_music = 0;
 			}
+			gfx_mono_draw_string("t/t/t/t/t", 0, 15, &sysfont);
 			i++;
 		}
 	}
