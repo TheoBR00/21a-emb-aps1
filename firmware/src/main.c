@@ -42,7 +42,7 @@
 
 // flags 
 volatile char flag1;
-volatile char started;
+volatile char started = 0;
 volatile char flag3;
 
  
@@ -106,7 +106,7 @@ void init(void) {
 	pio_configure(BUT2_PIO, PIO_INPUT, BUT2_PIO_IDX_MASK, PIO_PULLUP | PIO_DEBOUNCE);
 	
 	pio_handler_set(BUT1_PIO, BUT1_PIO_ID, BUT1_PIO_IDX_MASK, PIO_IT_EDGE, but1_callback);
-	pio_handler_set(BUT2_PIO, BUT2_PIO_ID, BUT2_PIO_IDX_MASK, PIO_IT_EDGE, but2_callback);
+	pio_handler_set(BUT2_PIO, BUT2_PIO_ID, BUT2_PIO_IDX_MASK, PIO_IT_FALL_EDGE, but2_callback);
 	
 	pio_enable_interrupt(BUT1_PIO, BUT1_PIO_IDX_MASK);
 	pio_enable_interrupt(BUT2_PIO, BUT2_PIO_IDX_MASK);
@@ -131,13 +131,17 @@ int divider = 0, noteDuration = 0;
 
 int notes = sizeof(melodyMario) / sizeof(melodyMario[0]) / 2;
 
+int thisNote = 0;
+
 int main (void) {
 	init();
 	int wholenote = (60000 * 4) / tempoM;
 	while(1) {
 		if (started) {
-			for (int thisNote = 0; thisNote < notes * 2; thisNote = thisNote + 2) {
-				// calculates the duration of each note
+			
+			//int thisNote = 0;
+			while((thisNote < notes * 2 ) & started){
+				
 				divider = melodyMario[thisNote + 1];
 				if (divider > 0) {
 					// regular note, just proceed
@@ -149,8 +153,26 @@ int main (void) {
 				}
 				tone(melodyMario[thisNote], noteDuration*0.9);
 				delay_ms(noteDuration*0.2);
+				thisNote = thisNote + 2;
 			}
-		}
+				
+				
+			}
+			//for (int thisNote = 0; thisNote < notes * 2; thisNote = thisNote + 2) {
+				// calculates the duration of each note
+			//	divider = melodyMario[thisNote + 1];
+			//	if (divider > 0) {
+					// regular note, just proceed
+			//		noteDuration = (wholenote) / divider;
+			//		} else if (divider < 0) {
+					// dotted notes are represented with negative durations!!
+			//		noteDuration = (wholenote) / abs(divider);
+			//		noteDuration *= 1.5; // increases the duration in half for dotted notes
+			//	}
+			//	tone(melodyMario[thisNote], noteDuration*0.9);
+			//	delay_ms(noteDuration*0.2);
+			//}
+		//}
 		pisca_led(1, 200);
 	}
 }
