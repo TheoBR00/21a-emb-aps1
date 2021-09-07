@@ -41,16 +41,16 @@
 #define BUZZER_PIO_IDX_MASK		(1u << BUZZER_PIO_IDX)
 
 // flags 
-volatile char flag1 = 0;
+volatile int selected = 0;
 volatile char started = 0;
-volatile char flag3;
+volatile char change_music = 0;
 
- 
 // calbacks 
 void but1_callback() {
-	flag1++;
-	if(flag1 == 2){
-		flag1 = 0;
+	selected++;
+	change_music = 1;
+	if(selected == 3){
+		selected = 0;
 	}
 }
 
@@ -59,17 +59,6 @@ void but2_callback() {
 }
 
 // funcoes
-
-// pisca led
-void pisca_led(int n, int t){
-	for (int i=0; i<n; i++){
-		pio_clear(LED1_PIO, LED1_PIO_IDX_MASK);
-		delay_ms(t);
-		pio_set(LED1_PIO, LED1_PIO_IDX_MASK);
-		delay_ms(t);
-	}
-}
-
 void play_buzzer(int freq) {
 	pio_set(BUZZER_PIO, BUZZER_PIO_IDX_MASK);
 	pio_set(LED1_PIO, LED1_PIO_IDX_MASK);
@@ -78,7 +67,6 @@ void play_buzzer(int freq) {
 	pio_clear(LED1_PIO, LED1_PIO_IDX_MASK);
 	delay_us((1e6)/freq);
 }
-
 
 // freq = 1/T
 // time = s
@@ -126,78 +114,46 @@ void init(void) {
 	//Inicializa Buzzer como saída
 	pio_set_output(BUZZER_PIO, BUZZER_PIO_IDX_MASK, 0, 0, 0);
 	started = 0;
-	flag1 = 0;
+	selected = 0;
 }
-
-int tempo = 80;
-int tempoM = 250;
-int divider = 0, noteDuration = 0;
-
-int notes = sizeof(melodyMario.notes) / sizeof(melodyMario.notes[0][0]) / 2;
-
-int thisNote = 0;
 
 int main (void) {
 	init();
+	gfx_mono_ssd1306_init();
+	songs song_choosed;
 	
-	songs songsOptions[] = {melodyMario, melody};
-	
-	int wholenote = (60000 * 4) / melodyMario.tempo;
-	
-	gfx_mono_ssd1306_init();	
+	songs songsOptions[] = {melodyMario, melodyGodFather, melodyTetris};
+	song_choosed = songsOptions[selected];	
+	int wholenote = (60000 * 4)/song_choosed.tempo;
+	int i = 0;
 	while(1) {
 		if (started) {
-			
-			//int thisNote = 0;
-			if(flag1 == 0){
+			if(selected == 0){
+				song_choosed = melodyMario;
 				gfx_mono_draw_string("             ", 0, 5, &sysfont);
-				delay_ms(10);
-				gfx_mono_draw_string("Mario Bros.", 0, 5, &sysfont);
-				while((thisNote < notes * 2 ) & started & (flag1 == 0)){
-					
-					divider = melodyMario.notes[thisNote][1];
-					
-					int noteDuration = divider > 0 ? wholenote/divider : 1.5*wholenote/abs(divider);
-					
-					tone(melodyMario.notes[thisNote][0], noteDuration*0.9);
-					delay_ms(noteDuration*0.2);
-					thisNote++;
-				}
-			}
-			if(flag1 == 1){
-				
-				gfx_mono_draw_string("The Godfather", 0, 5, &sysfont);
-				thisNote = 0;
-				while((thisNote < notes * 2 ) & started & (flag1 == 1)){
-					
-					divider = melody.notes[thisNote][1];
-					
-					int noteDuration = divider > 0 ? wholenote/divider : 1.5*wholenote/abs(divider);
-					
-					tone(melody.notes[thisNote][0], noteDuration*0.9);
-					delay_ms(noteDuration*0.2);
-					thisNote++;
-				}
+				gfx_mono_draw_string(song_choosed.name, 0, 5, &sysfont);
+			} 
+			if(selected == 1) {
+				song_choosed = melodyGodFather;
+				gfx_mono_draw_string(song_choosed.name, 0, 5, &sysfont);
+			} if(selected == 2) {
+				song_choosed = melodyTetris;
+				gfx_mono_draw_string("                ", 0, 5, &sysfont);
+				gfx_mono_draw_string(song_choosed.name, 0, 5, &sysfont);
 			}
 			
-				
-				
+			note nota_atual = song_choosed.notes[i];
+			int freq = nota_atual.freq;
+			int divider = nota_atual.duration;
+			int noteDuration = divider > 0 ? wholenote/divider : 1.5*wholenote/abs(divider);
+			tone(freq, noteDuration);
+			delay_ms(10);
+			
+			if (change_music) {
+				i = 0;
+				change_music = 0;
 			}
-			//for (int thisNote = 0; thisNote < notes * 2; thisNote = thisNote + 2) {
-				// calculates the duration of each note
-			//	divider = melodyMario[thisNote + 1];
-			//	if (divider > 0) {
-					// regular note, just proceed
-			//		noteDuration = (wholenote) / divider;
-			//		} else if (divider < 0) {
-					// dotted notes are represented with negative durations!!
-			//		noteDuration = (wholenote) / abs(divider);
-			//		noteDuration *= 1.5; // increases the duration in half for dotted notes
-			//	}
-			//	tone(melodyMario[thisNote], noteDuration*0.9);
-			//	delay_ms(noteDuration*0.2);
-			//}
-		//}
-		//pisca_led(1, 200);
+			i++;
+		}
 	}
 }
