@@ -128,8 +128,9 @@ void init(void) {
 int main (void) {
 	init();
 	gfx_mono_ssd1306_init();
-	songs song_choosed;
+	char buffer[100];
 	
+	songs song_choosed;
 	songs songsOptions[] = {melodyMario, melodyGodFather, melodyTetris};
 	song_choosed = songsOptions[selected];	
 	int wholenote = (60000 * 4)/song_choosed.tempo;
@@ -157,10 +158,12 @@ int main (void) {
 			tone(freq, noteDuration);
 			delay_ms(10);
 			if (change_music) {
+				gfx_mono_draw_string("           ", 0, 15, &sysfont);
 				i = 0;
 				change_music = 0;
 			}
-			gfx_mono_draw_string("t/t/t/t/t", 0, 15, &sysfont);
+			//sprintf(buffer, "%d", "\t"*i);
+			gfx_mono_draw_string("\t", i, 15, &sysfont);
 			i++;
 		}
 	}
