@@ -69,8 +69,10 @@ void pisca_led(int n, int t){
 
 void play_buzzer(int freq) {
 	pio_set(BUZZER_PIO, BUZZER_PIO_IDX_MASK);
+	pio_set(LED1_PIO, LED1_PIO_IDX_MASK);
 	delay_us((1e6)/freq);
 	pio_clear(BUZZER_PIO, BUZZER_PIO_IDX_MASK);
+	pio_clear(LED1_PIO, LED1_PIO_IDX_MASK);
 	delay_us((1e6)/freq);
 }
 
