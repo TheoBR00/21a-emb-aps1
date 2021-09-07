@@ -41,14 +41,17 @@
 #define BUZZER_PIO_IDX_MASK		(1u << BUZZER_PIO_IDX)
 
 // flags 
-volatile char flag1;
+volatile char flag1 = 0;
 volatile char started = 0;
 volatile char flag3;
 
  
 // calbacks 
 void but1_callback() {
-	flag1 = 1;
+	flag1++;
+	if(flag1 == 2){
+		flag1 = 0;
+	}
 }
 
 void but2_callback() {
@@ -105,7 +108,7 @@ void init(void) {
 	pio_configure(BUT1_PIO, PIO_INPUT, BUT1_PIO_IDX_MASK, PIO_PULLUP | PIO_DEBOUNCE);
 	pio_configure(BUT2_PIO, PIO_INPUT, BUT2_PIO_IDX_MASK, PIO_PULLUP | PIO_DEBOUNCE);
 	
-	pio_handler_set(BUT1_PIO, BUT1_PIO_ID, BUT1_PIO_IDX_MASK, PIO_IT_EDGE, but1_callback);
+	pio_handler_set(BUT1_PIO, BUT1_PIO_ID, BUT1_PIO_IDX_MASK, PIO_IT_FALL_EDGE, but1_callback);
 	pio_handler_set(BUT2_PIO, BUT2_PIO_ID, BUT2_PIO_IDX_MASK, PIO_IT_FALL_EDGE, but2_callback);
 	
 	pio_enable_interrupt(BUT1_PIO, BUT1_PIO_IDX_MASK);
@@ -123,6 +126,7 @@ void init(void) {
 	//Inicializa Buzzer como saída
 	pio_set_output(BUZZER_PIO, BUZZER_PIO_IDX_MASK, 0, 0, 0);
 	started = 0;
+	flag1 = 0;
 }
 
 int tempo = 80;
@@ -137,27 +141,45 @@ int main (void) {
 	init();
 	int wholenote = (60000 * 4) / tempoM;
 	
-	gfx_mono_draw_string("Mario Bros.", 10, 5, &sysfont);
+	gfx_mono_ssd1306_init();
+	
+	
 	
 	while(1) {
 		if (started) {
 			
 			//int thisNote = 0;
-			while((thisNote < notes * 2 ) & started){
-				
-				divider = melodyMario[thisNote + 1];
-				if (divider > 0) {
-					// regular note, just proceed
-					noteDuration = (wholenote) / divider;
-					} else if (divider < 0) {
-					// dotted notes are represented with negative durations!!
-					noteDuration = (wholenote) / abs(divider);
-					noteDuration *= 1.5; // increases the duration in half for dotted notes
+			if(flag1 == 0){
+				gfx_mono_draw_string("             ", 0, 5, &sysfont);
+				delay_ms(10);
+				gfx_mono_draw_string("Mario Bros.", 0, 5, &sysfont);
+				while((thisNote < notes * 2 ) & started & (flag1 == 0)){
+					
+					divider = melodyMario[thisNote + 1];
+					
+					int noteDuration = divider > 0 ? wholenote/divider : 1.5*wholenote/abs(divider);
+					
+					tone(melodyMario[thisNote], noteDuration*0.9);
+					delay_ms(noteDuration*0.2);
+					thisNote = thisNote + 2;
 				}
-				tone(melodyMario[thisNote], noteDuration*0.9);
-				delay_ms(noteDuration*0.2);
-				thisNote = thisNote + 2;
 			}
+			if(flag1 == 1){
+				
+				gfx_mono_draw_string("The Godfather", 0, 5, &sysfont);
+				thisNote = 0;
+				while((thisNote < notes * 2 ) & started & (flag1 == 1)){
+					
+					divider = melody[thisNote + 1];
+					
+					int noteDuration = divider > 0 ? wholenote/divider : 1.5*wholenote/abs(divider);
+					
+					tone(melody[thisNote], noteDuration*0.9);
+					delay_ms(noteDuration*0.2);
+					thisNote = thisNote + 2;
+				}
+			}
+			
 				
 				
 			}
@@ -176,6 +198,6 @@ int main (void) {
 			//	delay_ms(noteDuration*0.2);
 			//}
 		//}
-		pisca_led(1, 200);
+		//pisca_led(1, 200);
 	}
 }
