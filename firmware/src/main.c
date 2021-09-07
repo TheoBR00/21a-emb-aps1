@@ -136,6 +136,9 @@ int thisNote = 0;
 int main (void) {
 	init();
 	int wholenote = (60000 * 4) / tempoM;
+	
+	gfx_mono_draw_string("Mario Bros.", 10, 5, &sysfont);
+	
 	while(1) {
 		if (started) {
 			
