@@ -133,18 +133,18 @@ int tempo = 80;
 int tempoM = 250;
 int divider = 0, noteDuration = 0;
 
-int notes = sizeof(melodyMario) / sizeof(melodyMario[0]) / 2;
+int notes = sizeof(melodyMario.notes) / sizeof(melodyMario.notes[0][0]) / 2;
 
 int thisNote = 0;
 
 int main (void) {
 	init();
-	int wholenote = (60000 * 4) / tempoM;
 	
-	gfx_mono_ssd1306_init();
+	songs songsOptions[] = {melodyMario, melody};
 	
+	int wholenote = (60000 * 4) / melodyMario.tempo;
 	
-	
+	gfx_mono_ssd1306_init();	
 	while(1) {
 		if (started) {
 			
@@ -155,13 +155,13 @@ int main (void) {
 				gfx_mono_draw_string("Mario Bros.", 0, 5, &sysfont);
 				while((thisNote < notes * 2 ) & started & (flag1 == 0)){
 					
-					divider = melodyMario[thisNote + 1];
+					divider = melodyMario.notes[thisNote][1];
 					
 					int noteDuration = divider > 0 ? wholenote/divider : 1.5*wholenote/abs(divider);
 					
-					tone(melodyMario[thisNote], noteDuration*0.9);
+					tone(melodyMario.notes[thisNote][0], noteDuration*0.9);
 					delay_ms(noteDuration*0.2);
-					thisNote = thisNote + 2;
+					thisNote++;
 				}
 			}
 			if(flag1 == 1){
@@ -170,13 +170,13 @@ int main (void) {
 				thisNote = 0;
 				while((thisNote < notes * 2 ) & started & (flag1 == 1)){
 					
-					divider = melody[thisNote + 1];
+					divider = melody.notes[thisNote][1];
 					
 					int noteDuration = divider > 0 ? wholenote/divider : 1.5*wholenote/abs(divider);
 					
-					tone(melody[thisNote], noteDuration*0.9);
+					tone(melody.notes[thisNote][0], noteDuration*0.9);
 					delay_ms(noteDuration*0.2);
-					thisNote = thisNote + 2;
+					thisNote++;
 				}
 			}
 			
