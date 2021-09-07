@@ -46,8 +46,6 @@ volatile char started = 0;
 volatile char change_music = 0;
 
 // prototypes
-void but1_callback();
-void but2_callback();
 void play_buzzer(int freq);
 void tone(int freq, int time);
 void init(void);
@@ -128,7 +126,6 @@ void init(void) {
 int main (void) {
 	init();
 	gfx_mono_ssd1306_init();
-	char buffer[100];
 	
 	songs song_choosed;
 	songs songsOptions[] = {melodyMario, melodyGodFather, melodyTetris};
@@ -162,7 +159,6 @@ int main (void) {
 				i = 0;
 				change_music = 0;
 			}
-			//sprintf(buffer, "%d", "\t"*i);
 			gfx_mono_draw_string("\t", i, 15, &sysfont);
 			i++;
 		}
