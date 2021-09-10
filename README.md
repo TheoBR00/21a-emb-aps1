@@ -28,6 +28,9 @@ TODO: Inserir imagem do sistema montado
 
 TODO: Inserir link para vídeo do projeto funcionando
 
+Link do vídeo: https://www.dropbox.com/s/527501yqqkrxirt/IMG_3368.MOV?dl=0
+
+
 ### Músicas e Direitos autorais
 
 TODO: Listar músicas e dar crédio da onde saiu:
