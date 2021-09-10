@@ -45,6 +45,12 @@ volatile int selected = 0;
 volatile char started = 0;
 volatile char change_music = 0;
 
+// prototypes
+void play_buzzer(int freq);
+void tone(int freq, int time);
+void init(void);
+int main (void);
+
 // calbacks 
 void but1_callback() {
 	selected++;
@@ -120,39 +126,40 @@ void init(void) {
 int main (void) {
 	init();
 	gfx_mono_ssd1306_init();
-	songs song_choosed;
 	
+	songs song_choosed;
 	songs songsOptions[] = {melodyMario, melodyGodFather, melodyTetris};
 	song_choosed = songsOptions[selected];	
-	int wholenote = (60000 * 4)/song_choosed.tempo;
 	int i = 0;
 	while(1) {
 		if (started) {
 			if(selected == 0){
 				song_choosed = melodyMario;
-				gfx_mono_draw_string("             ", 0, 5, &sysfont);
-				gfx_mono_draw_string(song_choosed.name, 0, 5, &sysfont);
+				gfx_mono_draw_string("             ", 0, 3, &sysfont);
+				gfx_mono_draw_string(song_choosed.name, 0, 3, &sysfont);
 			} 
 			if(selected == 1) {
 				song_choosed = melodyGodFather;
-				gfx_mono_draw_string(song_choosed.name, 0, 5, &sysfont);
+				gfx_mono_draw_string(song_choosed.name, 0, 3, &sysfont);
 			} if(selected == 2) {
 				song_choosed = melodyTetris;
-				gfx_mono_draw_string("                ", 0, 5, &sysfont);
-				gfx_mono_draw_string(song_choosed.name, 0, 5, &sysfont);
+				gfx_mono_draw_string("                ", 0, 3, &sysfont);
+				gfx_mono_draw_string(song_choosed.name, 0, 3, &sysfont);
 			}
 			
+			int wholenote = (60000 * 4)/song_choosed.tempo;
 			note nota_atual = song_choosed.notes[i];
 			int freq = nota_atual.freq;
 			int divider = nota_atual.duration;
 			int noteDuration = divider > 0 ? wholenote/divider : 1.5*wholenote/abs(divider);
 			tone(freq, noteDuration);
 			delay_ms(10);
-			
 			if (change_music) {
+				gfx_mono_draw_string("           ", 0, 15, &sysfont);
 				i = 0;
 				change_music = 0;
 			}
+			gfx_mono_draw_string("\t", i, 15, &sysfont);
 			i++;
 		}
 	}
