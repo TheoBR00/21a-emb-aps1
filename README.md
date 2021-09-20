@@ -35,6 +35,10 @@ Link do vídeo: https://www.dropbox.com/s/527501yqqkrxirt/IMG_3368.MOV?dl=0
 
 TODO: Listar músicas e dar crédio da onde saiu:
 
+Referências de músicas: https://github.com/robsoncouto/arduino-songs/blob/master/thegodfather/thegodfather.ino
+			https://github.com/robsoncouto/arduino-songs/blob/master/supermariobros/supermariobros.ino
+			https://github.com/robsoncouto/arduino-songs/blob/master/tetris/tetris.ino
+
 
 Código com músicas no arquivo songs.h. Duas structs note e songs foram feitas. A primeira para receber características das notas da música
 como frequência e duração e a outra para receber características das músicas, como nome, tempo e suas notas. O vetor das músicas foram organizados
