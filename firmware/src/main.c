@@ -10,7 +10,7 @@
 /* defines                                                              */
 /************************************************************************/
 
-#define NOTA 240000
+#define NOTA 150000
 
 // LED1 - Left Led
 #define LED1_PIO				PIOA
