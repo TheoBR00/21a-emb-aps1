@@ -10,6 +10,8 @@
 /* defines                                                              */
 /************************************************************************/
 
+#define NOTA 240000
+
 // LED1 - Left Led
 #define LED1_PIO				PIOA
 #define LED1_PIO_ID				ID_PIOA
@@ -147,7 +149,7 @@ int main (void) {
 				gfx_mono_draw_string(song_choosed.name, 0, 3, &sysfont);
 			}
 			
-			int wholenote = (60000 * 4)/song_choosed.tempo;
+			int wholenote = (NOTA)/song_choosed.tempo;
 			note nota_atual = song_choosed.notes[i];
 			int freq = nota_atual.freq;
 			int divider = nota_atual.duration;
